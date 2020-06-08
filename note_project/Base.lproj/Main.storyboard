@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DC6-Cx-lDN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DC6-Cx-lDN">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -32,16 +32,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Yt0-55-9jM">
-                                <rect key="frame" x="20" y="20" width="374" height="754"/>
+                                <rect key="frame" x="20" y="20" width="374" height="699"/>
                                 <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PxJ-jq-M0F">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="795"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Yt0-55-9jM" firstAttribute="bottom" secondItem="Chc-3w-R58" secondAttribute="bottom" id="ZKy-0x-EJY"/>
+                            <constraint firstItem="Chc-3w-R58" firstAttribute="bottom" secondItem="Yt0-55-9jM" secondAttribute="bottom" constant="55" id="fqM-Wr-E5z"/>
                             <constraint firstItem="Yt0-55-9jM" firstAttribute="leading" secondItem="SP7-c5-a8k" secondAttribute="leadingMargin" id="hvu-Nh-g2E"/>
                             <constraint firstItem="Yt0-55-9jM" firstAttribute="top" secondItem="Chc-3w-R58" secondAttribute="top" constant="20" id="l95-3i-DCd"/>
                             <constraint firstItem="Yt0-55-9jM" firstAttribute="trailing" secondItem="SP7-c5-a8k" secondAttribute="trailingMargin" id="tKP-ej-gHA"/>
@@ -49,19 +53,20 @@
                         <viewLayoutGuide key="safeArea" id="Chc-3w-R58"/>
                     </view>
                     <navigationItem key="navigationItem" id="wdx-Ta-e93">
-                        <barButtonItem key="rightBarButtonItem" image="trash" catalog="system" id="85z-73-lxa">
+                        <barButtonItem key="rightBarButtonItem" image="sidebar.right" catalog="system" id="PJ8-17-6iq">
                             <connections>
-                                <action selector="deleteMemo:" destination="fir-po-JMa" id="p6H-94-rmn"/>
+                                <action selector="slideButtom:" destination="fir-po-JMa" id="wk4-2l-fJL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="memoTextView" destination="Yt0-55-9jM" id="5ey-Fc-1N3"/>
+                        <outlet property="rightContainerView" destination="PxJ-jq-M0F" id="Hm5-Eg-iot"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="heG-D5-rOw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="507" y="542"/>
+            <point key="canvasLocation" x="505.79710144927537" y="541.74107142857144"/>
         </scene>
         <!--Add Memo View Controller-->
         <scene sceneID="ZXE-8N-Jfy">
@@ -114,15 +119,17 @@
         <!--メモ一覧-->
         <scene sceneID="uCM-v4-HQG">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="N7u-9n-m7q" customClass="ViewController" customModule="DetailMemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="N7u-9n-m7q" customClass="ViewController" customModule="note_project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="W7y-h9-EaT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vf2-GU-Uny">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vf2-GU-Uny">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="725" id="bMi-qX-2yR"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="memoCell" id="0l5-bX-9VM">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
@@ -134,9 +141,8 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YBH-pW-gil">
-                                <rect key="frame" x="0.0" y="725" width="414" height="49"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBH-pW-gil">
+                                <rect key="frame" x="0.0" y="725" width="414" height="83"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
                                     <tabBarItem title="Note" image="doc" catalog="system" id="FUg-vs-v9d"/>
@@ -145,6 +151,14 @@
                             </tabBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Vf2-GU-Uny" firstAttribute="leading" secondItem="YBH-pW-gil" secondAttribute="leading" id="1CE-oD-A0h"/>
+                            <constraint firstItem="Vf2-GU-Uny" firstAttribute="top" secondItem="e8w-e7-JvX" secondAttribute="top" id="3Js-Wu-mGI"/>
+                            <constraint firstAttribute="trailing" secondItem="Vf2-GU-Uny" secondAttribute="trailing" id="JX6-vb-aZV"/>
+                            <constraint firstItem="Vf2-GU-Uny" firstAttribute="leading" secondItem="W7y-h9-EaT" secondAttribute="leading" id="Jma-ho-Le7"/>
+                            <constraint firstItem="Vf2-GU-Uny" firstAttribute="trailing" secondItem="YBH-pW-gil" secondAttribute="trailing" id="NJO-lx-mBw"/>
+                            <constraint firstItem="YBH-pW-gil" firstAttribute="top" secondItem="Vf2-GU-Uny" secondAttribute="bottom" id="mBi-dm-Ek5"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="e8w-e7-JvX"/>
                     </view>
                     <navigationItem key="navigationItem" title="メモ一覧" id="tym-8i-4GQ">
@@ -169,6 +183,6 @@
         <image name="doc" catalog="system" width="115" height="128"/>
         <image name="folder.badge.plus" catalog="system" width="128" height="86"/>
         <image name="pencil.and.ellipsis.rectangle" catalog="system" width="128" height="81"/>
-        <image name="trash" catalog="system" width="121" height="128"/>
+        <image name="sidebar.right" catalog="system" width="128" height="93"/>
     </resources>
 </document>
