@@ -128,8 +128,8 @@
                                 <rect key="frame" x="0.0" y="725" width="414" height="83"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
-                                    <tabBarItem title="Note" image="doc" catalog="system" id="FUg-vs-v9d"/>
-                                    <tabBarItem title="Homework" image="pencil.and.ellipsis.rectangle" catalog="system" id="VcF-VW-L1i"/>
+                                    <tabBarItem tag="1" title="Note" image="doc" catalog="system" id="FUg-vs-v9d"/>
+                                    <tabBarItem tag="2" title="Homework" image="pencil.and.ellipsis.rectangle" catalog="system" id="VcF-VW-L1i"/>
                                 </items>
                             </tabBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vf2-GU-Uny">
@@ -177,6 +177,7 @@
                     <connections>
                         <outlet property="memoTableView" destination="Vf2-GU-Uny" id="pGk-qz-Jub"/>
                         <outlet property="searchMemo" destination="EBZ-we-tXx" id="iYp-3Z-kcV"/>
+                        <outlet property="typeTabBar" destination="YBH-pW-gil" id="zGN-XV-3fS"/>
                         <segue destination="fir-po-JMa" kind="show" identifier="toDetail" id="luO-n1-8QQ"/>
                     </connections>
                 </viewController>

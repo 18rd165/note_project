@@ -8,13 +8,11 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, UISearchBarDelegate{
-class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, UITabBarDelegate {
+class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, UISearchBarDelegate,UITabBarDelegate {
     
     @IBOutlet weak var memoTableView: UITableView!
-    @IBOutlet weak var typeTabBar: UITabBar!
-
     @IBOutlet weak var searchMemo: UISearchBar!
+    @IBOutlet weak var typeTabBar: UITabBar!
     
     var memoArray = [String]()
     var searchResult = [String]()
@@ -109,15 +107,16 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     }
     //検索ボタン押下時の呼び出しメソッド
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    searchMemo.endEditing(true)
-     
-    //検索文字列を含むデータを検索結果配列に格納する。
-    searchResult = memoArray.filter { data in
-    return data.contains(searchMemo.text!)
+        searchMemo.endEditing(true)
+         
+        //検索文字列を含むデータを検索結果配列に格納する。
+        searchResult = memoArray.filter { data in
+        return data.contains(searchMemo.text!)
+        }
+         
+        //テーブルを再読み込みする。
+        memoTableView.reloadData()
     }
-     
-    //テーブルを再読み込みする。
-    memoTableView.reloadData()
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem){
         switch item.tag {
         case 2:
