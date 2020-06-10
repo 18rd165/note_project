@@ -8,21 +8,33 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, UISearchBarDelegate{
     
     @IBOutlet weak var memoTableView: UITableView!
+
+    @IBOutlet weak var searchMemo: UISearchBar!
     
     var memoArray = [String]()
+    var searchResult = [String]()
 
     let ud = UserDefaults.standard
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if( searchMemo.text != "" ) {
+        return searchResult.count
+        } else {
         return memoArray.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "memoCell", for: indexPath)
         cell.textLabel?.text = memoArray[indexPath.row]
+        if( searchMemo.text != "" ) {
+        cell.textLabel?.text = searchResult[indexPath.row]
+        } else {
+        cell.textLabel?.text = memoArray[indexPath.row]
+        }
         return cell
     }
     
@@ -36,7 +48,9 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        searchMemo.delegate = self
+         //何も入力されていなくてもReturnキーを押せるようにする。
+        searchMemo.enablesReturnKeyAutomatically = false
         memoTableView.delegate = self
         memoTableView.dataSource = self
     }
@@ -79,5 +93,17 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
                     tableView.reloadData()
                 }
             }
+    }
+    //検索ボタン押下時の呼び出しメソッド
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    searchMemo.endEditing(true)
+     
+    //検索文字列を含むデータを検索結果配列に格納する。
+    searchResult = memoArray.filter { data in
+    return data.contains(searchMemo.text!)
+    }
+     
+    //テーブルを再読み込みする。
+    memoTableView.reloadData()
     }
 }
