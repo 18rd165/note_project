@@ -145,8 +145,8 @@
                                 <rect key="frame" x="0.0" y="725" width="414" height="83"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
-                                    <tabBarItem title="Note" image="doc" catalog="system" id="FUg-vs-v9d"/>
-                                    <tabBarItem title="Homework" image="pencil.and.ellipsis.rectangle" catalog="system" id="VcF-VW-L1i"/>
+                                    <tabBarItem tag="1" title="Note" image="doc" catalog="system" id="FUg-vs-v9d"/>
+                                    <tabBarItem tag="2" title="Homework" image="pencil.and.ellipsis.rectangle" catalog="system" id="VcF-VW-L1i"/>
                                 </items>
                             </tabBar>
                         </subviews>
@@ -171,6 +171,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="memoTableView" destination="Vf2-GU-Uny" id="pGk-qz-Jub"/>
+                        <outlet property="typeTabBar" destination="YBH-pW-gil" id="Xra-tZ-SRL"/>
                         <segue destination="fir-po-JMa" kind="show" identifier="toDetail" id="luO-n1-8QQ"/>
                     </connections>
                 </viewController>

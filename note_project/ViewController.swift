@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, UITabBarDelegate {
     
     @IBOutlet weak var memoTableView: UITableView!
+    @IBOutlet weak var typeTabBar: UITabBar!
     
     var memoArray = [String]()
-
+    
     let ud = UserDefaults.standard
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,6 +40,17 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         
         memoTableView.delegate = self
         memoTableView.dataSource = self
+        
+        typeTabBar.delegate = self
+    }
+    @objc func tabOnClick(){
+        /*
+        let nextViewController = TaskNaviController()
+        self.present(nextViewController, animated:true, completion:nil)
+         */
+        let storyboard: UIStoryboard = UIStoryboard(name: "Tasks", bundle: nil)
+        let next: UIViewController = storyboard.instantiateInitialViewController()!
+        present(next, animated: true, completion: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -79,5 +91,15 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
                     tableView.reloadData()
                 }
             }
+    }
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem){
+        switch item.tag {
+        case 2:
+            //Homework
+            tabOnClick()
+            break
+        default:
+            return
+        }
     }
 }
