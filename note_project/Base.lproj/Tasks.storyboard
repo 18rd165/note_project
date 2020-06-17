@@ -34,7 +34,7 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Homework" image="pencil.and.ellipsis.rectangle" catalog="system" id="3KB-7S-4Wf"/>
                     <navigationItem key="navigationItem" title="課題リスト" id="wt0-1X-6UC">
-                        <barButtonItem key="leftBarButtonItem" title="てす" id="emd-V8-eZc">
+                        <barButtonItem key="leftBarButtonItem" title="戻る" id="emd-V8-eZc">
                             <connections>
                                 <action selector="goBackMemo:" destination="yp5-Qs-GiX" id="1Yr-Ac-hI8"/>
                             </connections>
@@ -83,10 +83,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="3" contentMode="scaleToFill" fixedFrame="YES" text="例: 第○回の授業の感想を200字以内で書き、授業用フォルダへ提出。" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="scn-hc-B4Q">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="3" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="scn-hc-B4Q">
                                 <rect key="frame" x="20" y="188" width="374" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">第○回授業感想
+第○回の授業の感想を200字以内で書き、授業用フォルダへ提出。</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -98,15 +100,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YHr-QY-oP6">
-                                <rect key="frame" x="159" y="324" width="208" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="2020年12月31日 9:20"/>
-                                <connections>
-                                    <action selector="ButtonTimeLimit:" destination="1bZ-ID-xYg" eventType="touchDown" id="1ws-e6-wks"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="通知" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3c-ek-4QM">
                                 <rect key="frame" x="20" y="367" width="106" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -114,15 +107,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LyM-52-1jO">
-                                <rect key="frame" x="159" y="362" width="208" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="提出期限の3時間前"/>
-                                <connections>
-                                    <action selector="ButtonNotification:" destination="1bZ-ID-xYg" eventType="touchDown" id="zcL-LF-k2z"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Le2-hL-X8A">
                                 <rect key="frame" x="144" y="422" width="127" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -135,22 +119,34 @@
                                     <action selector="ButtonTouchDown:" destination="1bZ-ID-xYg" eventType="touchDown" id="9SY-e8-j5g"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="2020年12月31日 0:00" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F2c-3k-TvF">
+                                <rect key="frame" x="159" y="322" width="223" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="提出期限の3時間前" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i05-ah-eg6">
+                                <rect key="frame" x="159" y="362" width="223" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="4IN-7f-vJk"/>
                     </view>
                     <navigationItem key="navigationItem" title="課題を追加" id="GiB-S3-hXy"/>
                     <connections>
-                        <outlet property="notification" destination="LyM-52-1jO" id="kBX-Au-lNV"/>
+                        <outlet property="notification" destination="i05-ah-eg6" id="6ki-zc-2RJ"/>
                         <outlet property="subjectTitle" destination="M4f-tq-wmI" id="lYh-Yq-RSz"/>
                         <outlet property="taskDescription" destination="scn-hc-B4Q" id="UKb-JU-awi"/>
                         <outlet property="taskRegister" destination="Le2-hL-X8A" id="mZM-o4-rUD"/>
-                        <outlet property="taskTimeLimit" destination="YHr-QY-oP6" id="s1u-go-0gg"/>
+                        <outlet property="taskTimeLimit" destination="F2c-3k-TvF" id="Wz7-M2-Ivr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qwh-g6-QD7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="749" y="73"/>
+            <point key="canvasLocation" x="747.82608695652175" y="72.991071428571431"/>
         </scene>
         <!--Task Navi Controller-->
         <scene sceneID="Ggx-cs-kKx">

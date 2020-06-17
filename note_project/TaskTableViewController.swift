@@ -13,13 +13,16 @@ class TaskTableViewController: UITableViewController {
     @IBOutlet var taskTable: UITableView!
     @IBOutlet weak var goBackMemo: UIBarButtonItem!
     
-    class Item{
+    class Item: Codable{
         var subject : String = ""
         var description : String = ""
         var timeLimit : Date = Date()
         var notifiEnable : Bool = false
         var notification : Date = Date()
     }
+    
+    var taskSaver = UserDefaults.standard
+    var taskKey: String = "taskList"
     
     var itemArray: [Item] = []
     
@@ -31,12 +34,24 @@ class TaskTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        itemArray = readItems()!
+    }
+    
+    func saveItems(items: [Item]) {
+        let data = items.map { try! JSONEncoder().encode($0) }
+        taskSaver.set(data as [Any], forKey: taskKey)
+    }
+
+    func readItems() -> [Item]? {
+        guard let items = taskSaver.array(forKey: taskKey) as? [Data] else { return [Item]() }
+
+        let decodedItems = items.map { try! JSONDecoder().decode(Item.self, from: $0) }
+        return decodedItems
     }
     
     @IBAction func goBackMemo(_ sender: Any) {
-        let d : Date = Date()
-        self.appendTask(subject: "A", description: "B", timeLimit: d, notification: d)
-        //self.dismiss(animated: true, completion: nil)
+        //self.appendTask(subject: "A", description: "B", timeLimit: d, notification: d)
+        self.dismiss(animated: true, completion: nil)
     }
     
 
@@ -48,6 +63,13 @@ class TaskTableViewController: UITableViewController {
         return 0
     }
      */
+    
+    func getTaskItems(){
+        itemArray = readItems()!
+    }
+    func saveTaskItems(){
+        saveItems(items: itemArray)
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -58,17 +80,23 @@ class TaskTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         let item = itemArray[indexPath.row]
-        cell.textLabel?.text = item.subject
+        cell.textLabel?.text = item.subject+": "+item.description
         return cell
     }
     
     func appendTask(subject:String, description:String,timeLimit:Date,notification:Date){
+        
+        getTaskItems()
+        
         let newItem: Item = Item()
         newItem.subject = subject
         newItem.description = description
         newItem.timeLimit = timeLimit
         newItem.notification = notification
         self.itemArray.append(newItem)
+        
+        saveTaskItems()
+
         self.tableView.reloadData()
     }
 
@@ -83,10 +111,14 @@ class TaskTableViewController: UITableViewController {
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        getTaskItems()
+        
         itemArray.remove(at: indexPath.row)
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
         
+        saveTaskItems()
     }
     
 
