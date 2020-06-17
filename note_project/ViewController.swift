@@ -77,9 +77,16 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
             //as! DetailViewControllerでダウンキャストしている
             let detailViewController = segue.destination as! DetailViewController
             //遷移前に選ばれているCellが取得できる
-            let selectedIndexPath = memoTableView.indexPathForSelectedRow!
-            detailViewController.selectedMemo = memoArray[selectedIndexPath.row]
-            detailViewController.selectedRow = selectedIndexPath.row
+            if(searchMemo.text != "" ){
+                let selectedIndexPath = memoTableView.indexPathForSelectedRow!
+                detailViewController.selectedMemo = searchResult[selectedIndexPath.row]
+                detailViewController.selectedRow = selectedIndexPath.row
+            }
+            else{
+                let selectedIndexPath = memoTableView.indexPathForSelectedRow!
+                detailViewController.selectedMemo = memoArray[selectedIndexPath.row]
+                detailViewController.selectedRow = selectedIndexPath.row
+            }
         }
     }
     func loadMemo(){
@@ -116,6 +123,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
          
         //テーブルを再読み込みする。
         memoTableView.reloadData()
+        
     }
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem){
         switch item.tag {
