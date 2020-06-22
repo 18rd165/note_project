@@ -1,21 +1,29 @@
 //
-//  AddTaskController.swift
+//  EditTaskController.swift
 //  note_project
 //
-//  Created by NobuyaNakanishi on 2020/06/10.
+//  Created by NobuyaNakanishi on 2020/06/22.
 //  Copyright © 2020 18rd165. All rights reserved.
 //
 
 import UIKit
 
-class AddTaskController: UIViewController {
-    @IBOutlet weak var subjectTitle: UITextField!
-    @IBOutlet weak var taskDescription: UITextView!
-    @IBOutlet weak var taskRegister: UIButton!
-    @IBOutlet weak var taskTimeLimit: UITextView!
-    @IBOutlet weak var notification: UITextView!
+class EditTaskController: UIViewController {
+    
+    var selectedNum: Int!
+    var selectedSubject: String!
+    var selectedDescription: String!
+    var selectedTimeLimit: Date!
+    var selectedNotification: String!
     
     var formatter = DateFormatter()
+    
+    @IBOutlet weak var subjectTitle: UITextField!
+    @IBOutlet weak var taskDescription: UITextView!
+    @IBOutlet weak var taskTimeLimit: UITextView!
+    @IBOutlet weak var notification: UITextView!
+    @IBOutlet weak var taskUpdate: UIButton!
+    
     var datePicker: UIDatePicker = UIDatePicker()
     var pickerView: UIPickerView = UIPickerView()
     
@@ -36,19 +44,19 @@ class AddTaskController: UIViewController {
             return formatter.string(from: date)
         }
     }
-    //https://qiita.com/k-yamada-github/items/8b6411959579fd6cd995
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        // Do any additional setup after loading the view.
         taskTimeLimit.isEditable = false
         notification.isEditable = false
-        
+            
         // Do any additional setup after loading the view.
         formatter.dateStyle = .long
         formatter.timeStyle = .short
         formatter.locale = Locale(identifier: "ja_JP")
-        
+            
         // ピッカー設定
         datePicker.datePickerMode = UIDatePicker.Mode.dateAndTime
         datePicker.timeZone = NSTimeZone.local
@@ -64,34 +72,35 @@ class AddTaskController: UIViewController {
         // インプットビュー設定(紐づいているUITextfieldへ代入)
         taskTimeLimit.inputView = datePicker
         taskTimeLimit.inputAccessoryView = toolbar
-        
+            
         //https://qiita.com/ryomaDsakamoto/items/ab4ae031706a8133f193
-        
+            
         formatter.dateFormat = "yyyy-MM-dd"
 
-        let day = Date()
-        let modifiedDate = Calendar.current.date(byAdding: .day, value: 7, to: day)!
-        datePicker.date = formatter.date(from: formatter.string(from: modifiedDate))!
-        
+        datePicker.date = selectedTimeLimit
+            
         formatter.dateStyle = .long
-        formatter.timeStyle = .none
+        formatter.timeStyle = .short
 
-        taskTimeLimit.text = formatter.string(from: modifiedDate)+" 0:00";
+        taskTimeLimit.text = formatter.string(from: datePicker.date)
         
         pickerView.delegate = self
         pickerView.dataSource = self
         pickerView.showsSelectionIndicator = true
-        
-        // 決定バーの生成
+            
+            // 決定バーの生成
         let toolbar2 = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
         let spacelItem2 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let doneItem2 = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done2))
         toolbar2.setItems([spacelItem2, doneItem2], animated: true)
-         
+             
         // インプットビュー設定
         notification.inputView = pickerView
         notification.inputAccessoryView = toolbar2
 
+        subjectTitle.text = selectedSubject
+        taskDescription.text = selectedDescription
+        notification.text = selectedNotification
     }
     @objc func done() {
         taskTimeLimit.endEditing(true)
@@ -101,32 +110,13 @@ class AddTaskController: UIViewController {
         formatter.locale = Locale(identifier: "ja_JP")
         
         taskTimeLimit.text = "\(formatter.string(from: datePicker.date))"
-
     }
     @objc func done2(){
         notification.endEditing(true)
-        
+            
         //notification.text = ""
     }
 
-    @IBAction func TodoRegisterButton(_ sender: Any){
-        
-    }
-    
-    override func didReceiveMemoryWarning(){
-        super.didReceiveMemoryWarning()
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     func alert(title:String, message:String) {
         let alertController = UIAlertController(title: title,
                                    message: message,
@@ -150,37 +140,41 @@ class AddTaskController: UIViewController {
         if count < 0 {
             // 戻るviewControllerがないとき(navigationController上で一番最初の画面のとき)
             let myClass = TaskTableViewController()
-            myClass.appendTask(subject:subjectTitle.text ?? "", description:taskDescription.text,timeLimit: datePicker.date,notification:notification.text)
+            myClass.updateTask(id: selectedNum,subject:subjectTitle.text ?? "", description:taskDescription.text,timeLimit:datePicker.date,notification:notification.text)
 
         }
         if let previousViewController = self.navigationController?.viewControllers[count] as? TaskTableViewController {
             // viewControlllerAの処理
             let myClass = previousViewController
-                myClass.appendTask(subject:subjectTitle.text ?? "", description:taskDescription.text,timeLimit: datePicker.date,notification:notification.text)
-            
+            myClass.updateTask(id: selectedNum,subject:subjectTitle.text ?? "", description:taskDescription.text,timeLimit:datePicker.date,notification:notification.text)
         } else {
             // それ以外のviewControllerの処理
             let myClass = TaskTableViewController()
-                myClass.appendTask(subject:subjectTitle.text ?? "", description:taskDescription.text,timeLimit: datePicker.date,notification:notification.text)
+                myClass.updateTask(id: selectedNum,subject:subjectTitle.text ?? "", description:taskDescription.text,timeLimit:datePicker.date,notification:notification.text)
 
         }
         
-        alert(title: "課題登録成功!", message: "課題登録が完了しました。")
+        alert(title: "課題更新成功!", message: "課題更新が完了しました。")
         //self.dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
     }
-    
-    @IBAction func ButtonTouchDown(_ sender: Any) {
+
+
+    @IBAction func ButtonDown(_ sender: Any) {
         registerButton()
     }
-    @IBAction func ButtonTimeLimit(_ sender: Any) {
-        
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
     }
-    @IBAction func ButtonNotification(_ sender: Any) {
-        
-    }
+    */
+
 }
-extension AddTaskController : UIPickerViewDelegate, UIPickerViewDataSource {
+extension EditTaskController : UIPickerViewDelegate, UIPickerViewDataSource {
  
     // ドラムロールの列数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import UserNotifications
 
-class TaskTableViewController: UITableViewController {
+class TaskTableViewController: UITableViewController, UNUserNotificationCenterDelegate {
 
     @IBOutlet var taskTable: UITableView!
     @IBOutlet weak var goBackMemo: UIBarButtonItem!
@@ -18,13 +19,18 @@ class TaskTableViewController: UITableViewController {
         var description : String = ""
         var timeLimit : Date = Date()
         var notifiEnable : Bool = false
-        var notification : Date = Date()
+        var notification : String = ""
     }
     
     var taskSaver = UserDefaults.standard
     var taskKey: String = "taskList"
     
     var itemArray: [Item] = []
+    
+    var selectedNum: Int = 0
+    var notificationEnabled: Int = 0
+    
+    var notificationTime = DateComponents()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +40,53 @@ class TaskTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        //saveItems(items: itemArray)
         itemArray = readItems()!
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+
+            switch settings.authorizationStatus {
+            case .authorized:
+                self.notificationEnabled = 1
+                break
+            case .denied:
+                break
+            case .notDetermined:
+                break
+            case .provisional:
+                break
+            @unknown default:
+                break
+            }
+        }
     }
+    
+    private func requestAuthorization() {
+        if #available(iOS 10.0, *) {
+            // iOS 10
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { (granted, error) in
+                if error != nil {
+                    return
+                }
+
+                if granted {
+                    print("通知許可")
+
+                    let center = UNUserNotificationCenter.current()
+                    center.delegate = self
+
+                } else {
+                    print("通知拒否")
+                }
+            })
+
+        } else {
+            // iOS 9以下
+            let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+        }
+        
+    }//https://qiita.com/yamataku29/items/f45e77de3026d4c50016
     
     func saveItems(items: [Item]) {
         let data = items.map { try! JSONEncoder().encode($0) }
@@ -84,7 +135,45 @@ class TaskTableViewController: UITableViewController {
         return cell
     }
     
-    func appendTask(subject:String, description:String,timeLimit:Date,notification:Date){
+    func notificationCheck(){
+        if notificationEnabled == 1 {
+            
+        }else{
+            requestAuthorization()
+        }
+        return
+    }
+    func registerNotification(date: Date, timing: String){
+        var modifiedDate: Date = Date()
+        if timing == "設定しない"{
+            return
+        }else if timing.contains("の5分") {
+            modifiedDate = Calendar.current.date(byAdding: .minute, value: -5, to: date)!
+        }else if timing.contains("の10分") {
+            modifiedDate = Calendar.current.date(byAdding: .minute, value: -10, to: date)!
+        }else if timing.contains("の15分") {
+            modifiedDate = Calendar.current.date(byAdding: .minute, value: -15, to: date)!
+        }else if timing.contains("の30分") {
+            modifiedDate = Calendar.current.date(byAdding: .minute, value: -30, to: date)!
+        }else if timing.contains("の1時間") {
+            modifiedDate = Calendar.current.date(byAdding: .hour, value: -1, to: date)!
+        }else if timing.contains("の3時間") {
+            modifiedDate = Calendar.current.date(byAdding: .hour, value: -3, to: date)!
+        }else if timing.contains("の6時間") {
+            modifiedDate = Calendar.current.date(byAdding: .hour, value: -6, to: date)!
+        }else if timing.contains("の12時間") {
+            modifiedDate = Calendar.current.date(byAdding: .hour, value: -12, to: date)!
+        }else if timing.contains("の前日") {
+            modifiedDate = Calendar.current.date(byAdding: .day, value: -1, to: date)!
+        }else{
+            return
+        }
+        print(modifiedDate)
+
+        
+    }
+    
+    func appendTask(subject:String, description:String,timeLimit:Date,notification:String){
         
         getTaskItems()
         
@@ -95,9 +184,37 @@ class TaskTableViewController: UITableViewController {
         newItem.notification = notification
         self.itemArray.append(newItem)
         
+        notificationCheck()
+        registerNotification(date:timeLimit,timing:notification)
+        
         saveTaskItems()
 
         self.tableView.reloadData()
+    }
+    func updateTask(id:Int,subject:String, description:String,timeLimit:Date,notification:String){
+        
+        getTaskItems()
+        
+        let newItem: Item = Item()
+        newItem.subject = subject
+        newItem.description = description
+        newItem.timeLimit = timeLimit
+        newItem.notification = notification
+        itemArray[id] = newItem
+        
+        notificationCheck()
+        registerNotification(date:timeLimit,timing:notification)
+
+        saveTaskItems()
+
+        self.tableView.reloadData()
+    }
+    func removeTask(id: Int){
+        getTaskItems()
+        
+        itemArray.remove(at:id)
+        
+        saveTaskItems()
     }
 
     
@@ -121,6 +238,18 @@ class TaskTableViewController: UITableViewController {
         saveTaskItems()
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //セルの選択解除
+        selectedNum = indexPath.row
+        //print(selectedNum)
+        if(selectedNum != nil){
+            performSegue(withIdentifier: "toEditController", sender: nil)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        //ここに遷移処理を書く
+        //self.present(EditTaskController(), animated: true, completion: nil)
+    }
 
     /*
     // Override to support rearranging the table view.
@@ -137,14 +266,23 @@ class TaskTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "toEditController" {
+            let subVC: EditTaskController = (segue.destination as? EditTaskController)!
+            subVC.selectedNum = selectedNum
+            print("status:\(selectedNum)")
+            subVC.selectedSubject = itemArray[selectedNum].subject
+            subVC.selectedDescription = itemArray[selectedNum].description
+            subVC.selectedTimeLimit = itemArray[selectedNum].timeLimit
+            subVC.selectedNotification = itemArray[selectedNum].notification
+        }
     }
-    */
+    
 
 }

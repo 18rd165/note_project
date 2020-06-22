@@ -11,6 +11,7 @@
 		177E2B452490A5D800352BE1 /* AddTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177E2B442490A5D800352BE1 /* AddTaskController.swift */; };
 		177E2B492490A93500352BE1 /* TaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177E2B482490A93500352BE1 /* TaskTableViewController.swift */; };
 		177E2B4B2490AE5200352BE1 /* TaskNaviController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177E2B4A2490AE5200352BE1 /* TaskNaviController.swift */; };
+		1798235524A08B8C006EEE9E /* EditTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1798235424A08B8C006EEE9E /* EditTaskController.swift */; };
 		4E3D47E324877E1900EE1E47 /* AddMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D47E224877E1900EE1E47 /* AddMemoViewController.swift */; };
 		4E3D47E52487811900EE1E47 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D47E42487811900EE1E47 /* DetailViewController.swift */; };
 		4E6BD468248E1A1E00D1AA49 /* SideBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E6BD467248E1A1E00D1AA49 /* SideBar.storyboard */; };
@@ -48,6 +49,7 @@
 		177E2B442490A5D800352BE1 /* AddTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskController.swift; sourceTree = "<group>"; };
 		177E2B482490A93500352BE1 /* TaskTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewController.swift; sourceTree = "<group>"; };
 		177E2B4A2490AE5200352BE1 /* TaskNaviController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskNaviController.swift; sourceTree = "<group>"; };
+		1798235424A08B8C006EEE9E /* EditTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskController.swift; sourceTree = "<group>"; };
 		4E3D47E224877E1900EE1E47 /* AddMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoViewController.swift; sourceTree = "<group>"; };
 		4E3D47E42487811900EE1E47 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		4E6BD467248E1A1E00D1AA49 /* SideBar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideBar.storyboard; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				4E8C8BCF2484E013006A4BBB /* ViewController.swift */,
 				4E8C8BD12484E013006A4BBB /* Main.storyboard */,
 				17653493248E255400818123 /* Tasks.storyboard */,
+				1798235424A08B8C006EEE9E /* EditTaskController.swift */,
 				177E2B4A2490AE5200352BE1 /* TaskNaviController.swift */,
 				177E2B482490A93500352BE1 /* TaskTableViewController.swift */,
 				177E2B442490A5D800352BE1 /* AddTaskController.swift */,
@@ -308,6 +311,7 @@
 				177E2B4B2490AE5200352BE1 /* TaskNaviController.swift in Sources */,
 				177E2B492490A93500352BE1 /* TaskTableViewController.swift in Sources */,
 				4E8C8BCC2484E013006A4BBB /* AppDelegate.swift in Sources */,
+				1798235524A08B8C006EEE9E /* EditTaskController.swift in Sources */,
 				4E8C8BCE2484E013006A4BBB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
