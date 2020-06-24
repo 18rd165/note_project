@@ -19,7 +19,7 @@ class AddTaskController: UIViewController {
     var datePicker: UIDatePicker = UIDatePicker()
     var pickerView: UIPickerView = UIPickerView()
     
-    let notifiList: [String] = ["設定しない","提出期限の5分前","提出期限の10分前","提出期限の15分前","提出期限の30分前","提出期限の1時間前","提出期限の3時間前","提出期限の6時間前","提出期限の12時間前","提出期限の前日"]
+    var notifiList: [String] = []
     
     class DateUtils {
         class func dateFromString(string: String, format: String) -> Date {
@@ -53,6 +53,7 @@ class AddTaskController: UIViewController {
         datePicker.datePickerMode = UIDatePicker.Mode.dateAndTime
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale(identifier: "ja_JP")
+        datePicker.minuteInterval = TaskTableViewController().getMinuteInterval()
         taskTimeLimit.inputView = datePicker
 
         // 決定バーの生成
@@ -80,8 +81,13 @@ class AddTaskController: UIViewController {
         
         pickerView.delegate = self
         pickerView.dataSource = self
-        pickerView.showsSelectionIndicator = true
         
+        if #available(iOS 7.0,*){
+            
+        }else{
+            pickerView.showsSelectionIndicator = true
+        }
+
         // 決定バーの生成
         let toolbar2 = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
         let spacelItem2 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
@@ -91,7 +97,9 @@ class AddTaskController: UIViewController {
         // インプットビュー設定
         notification.inputView = pickerView
         notification.inputAccessoryView = toolbar2
-
+        
+        //通知タイミングリストの取得
+        notifiList = TaskTableViewController().getNotifiList()
     }
     @objc func done() {
         taskTimeLimit.endEditing(true)
@@ -148,21 +156,18 @@ class AddTaskController: UIViewController {
         
         let count = (self.navigationController?.viewControllers.count)! - 2
         if count < 0 {
-            // 戻るviewControllerがないとき(navigationController上で一番最初の画面のとき)
+            //戻るviewControllerがないとき(navigationController上で一番最初の画面のとき)
             let myClass = TaskTableViewController()
             myClass.appendTask(subject:subjectTitle.text ?? "", description:taskDescription.text,timeLimit: datePicker.date,notification:notification.text)
-
         }
         if let previousViewController = self.navigationController?.viewControllers[count] as? TaskTableViewController {
             // viewControlllerAの処理
             let myClass = previousViewController
                 myClass.appendTask(subject:subjectTitle.text ?? "", description:taskDescription.text,timeLimit: datePicker.date,notification:notification.text)
-            
         } else {
             // それ以外のviewControllerの処理
             let myClass = TaskTableViewController()
                 myClass.appendTask(subject:subjectTitle.text ?? "", description:taskDescription.text,timeLimit: datePicker.date,notification:notification.text)
-
         }
         
         alert(title: "課題登録成功!", message: "課題登録が完了しました。")

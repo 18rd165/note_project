@@ -27,7 +27,7 @@ class EditTaskController: UIViewController {
     var datePicker: UIDatePicker = UIDatePicker()
     var pickerView: UIPickerView = UIPickerView()
     
-    let notifiList: [String] = ["設定しない","提出期限の5分前","提出期限の10分前","提出期限の15分前","提出期限の30分前","提出期限の1時間前","提出期限の3時間前","提出期限の6時間前","提出期限の12時間前","提出期限の前日"]
+    var notifiList: [String] = []
     
     class DateUtils {
         class func dateFromString(string: String, format: String) -> Date {
@@ -61,6 +61,7 @@ class EditTaskController: UIViewController {
         datePicker.datePickerMode = UIDatePicker.Mode.dateAndTime
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale(identifier: "ja_JP")
+        datePicker.minuteInterval = TaskTableViewController().getMinuteInterval()
         taskTimeLimit.inputView = datePicker
 
         // 決定バーの生成
@@ -86,8 +87,12 @@ class EditTaskController: UIViewController {
         
         pickerView.delegate = self
         pickerView.dataSource = self
-        pickerView.showsSelectionIndicator = true
+        
+        if #available(iOS 7.0,*){
             
+        }else{
+            pickerView.showsSelectionIndicator = true
+        }
             // 決定バーの生成
         let toolbar2 = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
         let spacelItem2 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
@@ -97,10 +102,18 @@ class EditTaskController: UIViewController {
         // インプットビュー設定
         notification.inputView = pickerView
         notification.inputAccessoryView = toolbar2
-
+        
+        //それぞれの値をもってくる
         subjectTitle.text = selectedSubject
         taskDescription.text = selectedDescription
         notification.text = selectedNotification
+        
+        //通知タイミングリストの取得
+        notifiList = TaskTableViewController().getNotifiList()
+        
+        if let noti = notifiList.firstIndex(of: selectedNotification) {
+            pickerView.selectRow(noti, inComponent: 0, animated: false)
+        }
     }
     @objc func done() {
         taskTimeLimit.endEditing(true)

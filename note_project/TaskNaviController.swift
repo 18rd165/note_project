@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskNaviController: UINavigationController {
+class TaskNaviController: UINavigationController,UNUserNotificationCenterDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()

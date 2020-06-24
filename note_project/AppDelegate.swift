@@ -77,4 +77,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
+extension AppDelegate: UNUserNotificationCenterDelegate{
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // アプリ起動中でもアラートと音で通知
+        completionHandler([.badge, .alert, .sound])
+    }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+        
+    }
+}//http://harumi.sakura.ne.jp/wordpress/2019/07/02/納豆の日7-10にlocalnotificationを飛ばす/
