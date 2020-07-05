@@ -15,12 +15,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <tabBar key="tableFooterView" contentMode="scaleToFill" id="YdF-9r-R6k">
-                            <rect key="frame" x="0.0" y="99.5" width="414" height="49"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <items/>
-                        </tabBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ToDoItemCell" id="NYK-0l-bBE">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
@@ -32,7 +26,7 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Homework" image="pencil.and.ellipsis.rectangle" catalog="system" id="3KB-7S-4Wf"/>
+                    <tabBarItem key="tabBarItem" tag="15" title="Homework" image="pencil.and.ellipsis.rectangle" catalog="system" id="3KB-7S-4Wf"/>
                     <navigationItem key="navigationItem" title="課題リスト" id="wt0-1X-6UC">
                         <barButtonItem key="leftBarButtonItem" title="戻る" id="emd-V8-eZc">
                             <connections>
@@ -47,12 +41,19 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addTaskButton" destination="E0h-tj-Gi2" id="pLb-N7-4b1"/>
                         <outlet property="goBackMemo" destination="emd-V8-eZc" id="XV7-Qb-t28"/>
                         <outlet property="taskTable" destination="Otd-bh-YaZ" id="73z-WI-E3H"/>
                         <segue destination="JGO-Wk-knW" kind="show" identifier="toEditController" id="AZm-o9-s5y"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZX8-F1-Dd4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tabBar contentMode="scaleToFill" id="YdF-9r-R6k">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <items/>
+                </tabBar>
             </objects>
             <point key="canvasLocation" x="-67" y="73"/>
         </scene>
@@ -162,7 +163,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="科目名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A1P-ya-Yvr">
-                                <rect key="frame" x="20" y="97" width="106" height="24"/>
+                                <rect key="frame" x="20" y="96" width="106" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>

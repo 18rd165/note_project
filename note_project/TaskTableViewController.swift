@@ -13,6 +13,7 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
 
     @IBOutlet var taskTable: UITableView!
     @IBOutlet weak var goBackMemo: UIBarButtonItem!
+    @IBOutlet weak var addTaskButton: UIBarButtonItem!
     
     class Item: Codable{
         var subject : String = ""
@@ -38,6 +39,10 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
     let notifiList: KeyValuePairs = ["00-noUse":"設定しない","01-5min":"提出期限の5分前","02-10min":"提出期限の10分前","03-15min":"提出期限の15分前","04-30min":"提出期限の30分前","05-1hour":"提出期限の1時間前","06-3hour":"提出期限の3時間前","07-6hour":"提出期限の6時間前","08-12hour":"提出期限の12時間前","09-24hour":"提出期限の前日"]
     var notifiListValue: [String] = []
     var notifiListDictionary: [String:String] = [:]
+    
+    let pickerView: UIPickerView = UIPickerView()
+    let optionList: [String] = ["(並べ替え)"]
+    let sortType: [String] = ["科目名の昇順","科目名の降順","提出期限が早い順","提出期限が遅い順","カスタム"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +74,8 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
         for (key, value) in notifiList {
             notifiListDictionary[key] = value
         }
+        
+        anyActionEvent()
     }
     
     private func requestAuthorization() {
@@ -135,23 +142,31 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
     }
     
     func getNotifiList() -> [String]{
-        for (_, value) in notifiList {
-            notifiListValue.append(value)
+        if notifiListValue.count >= 1 {
+            return notifiListValue
+        }
+        for data in notifiList {
+            notifiListValue.append(data.value)
         }
         return notifiListValue
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return itemArray.count
+        return itemArray.count+optionList.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
-        let item = itemArray[indexPath.row]
-        cell.textLabel?.text = item.subject+": "+item.description
-        return cell
+        if indexPath.row < itemArray.count {
+            let item = itemArray[indexPath.row]
+            cell.textLabel?.text = item.subject+": "+item.description
+            return cell
+        }else{
+            cell.textLabel?.text = optionList[indexPath.row - itemArray.count]
+            return cell
+        }
     }
     
     func notificationCheck(){
@@ -308,6 +323,14 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
         
         saveTaskItems()
     }
+    func insertTask(item: Item, at: Int){
+        getTaskItems()
+        
+        itemArray.insert(item, at: at)
+        
+        saveTaskItems()
+    }
+    
     func removeNotification(identifier: String){
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: [identifier])
@@ -316,41 +339,143 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return true
+        if indexPath.row < itemArray.count {
+            return true
+        }
+        return false
     }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
+        if editingStyle == .delete {
+            getTaskItems()
+        
+            removeTask(id: indexPath.row)
+            //itemArray.remove(at: indexPath.row)
+            let indexPaths = [indexPath]
+            tableView.deleteRows(at: indexPaths, with: .automatic)
+        
+            saveTaskItems()
+        }
+    }
+    func optionItemEvent(id: Int){
+        switch id {
+        case 0:
+            anyActionEvent()
+            viewSortingAlert()
+            break
+        default:
+            break
+        }
+    }
+    func viewSortingAlert(){
+        // ① UIAlertControllerクラスのインスタンスを生成
+        // タイトル, メッセージ, Alertのスタイルを指定する
+        // 第3引数のpreferredStyleでアラートの表示スタイルを指定する
+        let alert: UIAlertController = UIAlertController(title: "リストの並べ替え", message: "リストの並べ替え方法を選択してください。", preferredStyle:  UIAlertController.Style.actionSheet)
+
+        // ② Actionの設定
+        // Action初期化時にタイトル, スタイル, 押された時に実行されるハンドラを指定する
+        // 第3引数のUIAlertActionStyleでボタンのスタイルを指定する
+        // OKボタン
+        /*
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+        })
+         */
+        
+        var actions: [UIAlertAction] = []
+        var i: Int = 0
+        sortType.forEach {
+            let defaultAction: UIAlertAction = UIAlertAction(title: $0, style: UIAlertAction.Style.default, handler:{
+                // ボタンが押された時の処理を書く（クロージャ実装）
+                (action: UIAlertAction!) -> Void in
+                self.executeSort(type: action.title!)
+            })
+            actions.append(defaultAction)
+            i += 1
+        }
+        
+        // キャンセルボタン
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("Cancel")
+        })
+
+        // ③ UIAlertControllerにActionを追加
+        alert.addAction(cancelAction)
+        actions.forEach {
+            alert.addAction($0)
+        }
+        
+        // ④ Alertを表示
+        present(alert, animated: true, completion: nil)
+        
+    }//https://qiita.com/funacchi/items/b76e62eb82fc8d788da5#表示スタイルactionsheet
+    
+    func executeSort(type: String){
         getTaskItems()
-        
-        removeTask(id: indexPath.row)
-        //itemArray.remove(at: indexPath.row)
-        let indexPaths = [indexPath]
-        tableView.deleteRows(at: indexPaths, with: .automatic)
-        
+        switch type {
+        case sortType[0]:
+            //科目名昇順
+            itemArray.sort{ $0.subject < $1.subject }
+            break
+        case sortType[1]:
+            //科目名降順
+            itemArray.sort{ $0.subject > $1.subject }
+            break
+        case sortType[2]:
+            //提出期限昇順
+            itemArray.sort{ $0.timeLimit < $1.timeLimit }
+            break
+        case sortType[3]:
+            //提出期限降順
+            itemArray.sort{ $0.timeLimit > $1.timeLimit }
+            break
+        default:
+            //カスタム編集の許可
+            tableView.isEditing = true
+            tableView.allowsSelectionDuringEditing = true
+            break
+        }
         saveTaskItems()
+        
+        self.tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //セルの選択解除
-        selectedNum = indexPath.row
-        //print(selectedNum)
-        //if(selectedNum != nil){
-            performSegue(withIdentifier: "toEditController", sender: nil)
-        //}
+        anyActionEvent()
+        if indexPath.row < itemArray.count {
+            selectedNum = indexPath.row
+            //print(selectedNum)
+            //if(selectedNum != nil){
+                performSegue(withIdentifier: "toEditController", sender: nil)
+            //}
+        }else{
+            optionItemEvent(id: indexPath.row-itemArray.count)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
 
         //ここに遷移処理を書く
         //self.present(EditTaskController(), animated: true, completion: nil)
     }
-
-    /*
+    
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+        
+        getTaskItems()
+        
+        let targetItem = itemArray[fromIndexPath.row]
+        itemArray.remove(at: fromIndexPath.row)
+        itemArray.insert(targetItem, at: to.row)
+        
+        saveTaskItems()
     }
-    */
 
     /*
     // Override to support conditional rearranging of the table view.
@@ -378,6 +503,28 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
         }
     }
     
+    func anyActionEvent(){
+        //任意のアクションの実行時
+        tableView.isEditing = false
+        tableView.allowsSelectionDuringEditing = false
+    }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+      // ここで処理を行う
+        completionHandler([.badge, .alert, .sound])
+    }
+    
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem){
+        switch item.tag {
+        case 1:
+            break
+        case 2:
+            break
+        default:
+            break
+        }
+    }
     func getMinuteInterval() -> Int {
         return pickerMinuteInterval
     }
