@@ -43,6 +43,7 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
     let pickerView: UIPickerView = UIPickerView()
     let optionList: [String] = ["(並べ替え)"]
     let sortType: [String] = ["科目名の昇順","科目名の降順","提出期限が早い順","提出期限が遅い順","カスタム"]
+    var sortingItemEnabled: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,11 +121,18 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
     
     @IBAction func goBackMemo(_ sender: Any) {
         //self.appendTask(subject: "A", description: "B", timeLimit: d, notification: d)
+        if sortingItemEnabled == false {
+            anyActionEvent()
+            return
+        }
         
         self.dismiss(animated: true, completion: nil)
     }
     
-
+    @IBAction func addTaskButton(_ sender: Any) {
+        anyActionEvent()
+    }
+    
     // MARK: - Table view data source
 
     /*
@@ -153,9 +161,8 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return itemArray.count+optionList.count
+        return itemArray.count+optionList.count-(sortingItemEnabled==false ? 1 : 0)
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
@@ -360,6 +367,10 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
         }
     }
     func optionItemEvent(id: Int){
+        var taskId: Int = id
+        if taskId>=0 && sortingItemEnabled==false {
+            taskId = taskId - 1
+        }
         switch id {
         case 0:
             anyActionEvent()
@@ -438,8 +449,7 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
             break
         default:
             //カスタム編集の許可
-            tableView.isEditing = true
-            tableView.allowsSelectionDuringEditing = true
+            setCustomSorting(enabled: true)
             break
         }
         saveTaskItems()
@@ -492,6 +502,7 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        anyActionEvent()
         if segue.identifier == "toEditController" {
             let subVC: EditTaskController = (segue.destination as? EditTaskController)!
             subVC.selectedNum = selectedNum
@@ -505,8 +516,18 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
     
     func anyActionEvent(){
         //任意のアクションの実行時
-        tableView.isEditing = false
-        tableView.allowsSelectionDuringEditing = false
+        setCustomSorting(enabled: false)
+        self.tableView.reloadData()
+    }
+    func setCustomSorting(enabled: Bool){
+        tableView.isEditing = enabled
+        tableView.allowsSelectionDuringEditing = enabled
+        sortingItemEnabled = !enabled
+        if enabled == true{
+            goBackMemo.title = "完了"
+        }else{
+            goBackMemo.title = "戻る"
+        }
     }
     
     @available(iOS 10.0, *)

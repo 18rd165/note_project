@@ -35,7 +35,8 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Add" image="plus" catalog="system" style="done" id="E0h-tj-Gi2">
                             <connections>
-                                <segue destination="1bZ-ID-xYg" kind="show" id="vYg-wi-ydb"/>
+                                <action selector="addTaskButton:" destination="yp5-Qs-GiX" id="QaF-rx-TfA"/>
+                                <segue destination="1bZ-ID-xYg" kind="show" identifier="toAddController" id="vYg-wi-ydb"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
