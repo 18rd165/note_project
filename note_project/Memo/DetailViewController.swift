@@ -66,7 +66,7 @@ class DetailViewController: UIViewController {
         let ud = UserDefaults.standard
         if ud.array(forKey: "memoArray") != nil{
             var saveMemoArray = ud.array(forKey: "memoArray") as! [[String]]
-            saveMemoArray[0].remove(at: displayRow)
+            saveMemoArray[Row].remove(at: displayRow + 1)
             ud.set(saveMemoArray, forKey: "memoArray" )
             ud.synchronize()
             //画面遷移

@@ -31,7 +31,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Yt0-55-9jM">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Yt0-55-9jM" customClass="CustomTextField" customModule="note_project" customModuleProvider="target">
                                 <rect key="frame" x="20" y="20" width="374" height="699"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" red="0.41176470590000003" green="0.40000000000000002" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,7 +43,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Chc-3w-R58" firstAttribute="bottom" secondItem="Yt0-55-9jM" secondAttribute="bottom" constant="55" id="fqM-Wr-E5z"/>
                             <constraint firstItem="Yt0-55-9jM" firstAttribute="leading" secondItem="SP7-c5-a8k" secondAttribute="leadingMargin" id="hvu-Nh-g2E"/>
