@@ -52,20 +52,21 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var memoTextView: UITextView!
     
-    var selectedRow:Int!
-    var selectedMemo : String!
+    var displayRow:Int!
+    var displayMemo : String!
+    var Row:Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       memoTextView.text = selectedMemo
+       memoTextView.text = displayMemo
     }
     
     @IBAction func deleteMemo(_ sender: Any) {
         let ud = UserDefaults.standard
         if ud.array(forKey: "memoArray") != nil{
-            var saveMemoArray = ud.array(forKey: "memoArray") as![String]
-            saveMemoArray.remove(at: selectedRow)
+            var saveMemoArray = ud.array(forKey: "memoArray") as! [[String]]
+            saveMemoArray[0].remove(at: displayRow)
             ud.set(saveMemoArray, forKey: "memoArray" )
             ud.synchronize()
             //画面遷移

@@ -11,6 +11,7 @@ import UIKit
 class AddMemoViewController: UIViewController {
     
     @IBOutlet weak var memoTextView: UITextView!
+    @IBOutlet weak var subjectText: CustomLabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,30 +21,45 @@ class AddMemoViewController: UIViewController {
     @IBAction func save(_ sender: Any) {
         
         let inputText = memoTextView.text
+        let inputLabel = subjectText.text
         let ud = UserDefaults.standard
+        let inputArray:[String] = [inputLabel!, inputText!]
+        
         if ud.array(forKey: "memoArray") != nil{
             //saveMemoArrayに取得
-            var saveMemoArray = ud.array(forKey: "memoArray") as! [String]
+            var saveMemoArray = ud.array(forKey: "memoArray") as! [[String]]
                 //テキストに何か書かれているか？
-            if inputText != ""{
-                //配列に追加
-                saveMemoArray.append(inputText!)
-                ud.set(saveMemoArray, forKey: "memoArray")
+            if inputLabel != ""{
+                if inputText != ""{
+                    saveMemoArray.append(inputArray)
+                    ud.set(saveMemoArray, forKey: "memoArray")
+                }
+                else {
+                    showAlert(title: "ノートに何も入力されていません")
+                }
+                
             }else{
-                showAlert(title: "何も入力されていません")
+                showAlert(title: "教科名に何も入力されていません")
 
             }
 
         }else{
             //最初、何も書かれていない場合
-            var newMemoArray = [String]()
+            var newMemoArray = [[String]]()
             //nilを強制アンラップはエラーが出るから
-            if inputText != ""{
-                //inputtextはoptional型だから強制アンラップ
-                newMemoArray.append(inputText!)
+            if inputLabel != ""{
+                newMemoArray.append(inputArray)
                 ud.set(newMemoArray, forKey: "memoArray")
+                if inputText != ""{
+                    newMemoArray.append(inputArray)
+                    
+                }
+                else {
+                    showAlert(title: "ノートに何も入力されていません")
+                }
+                
             }else{
-                showAlert(title: "何も入力されていません")
+                showAlert(title: "教科名に何も入力されていません")
             }
         }
         showAlert(title: "保存完了")
@@ -54,8 +70,6 @@ class AddMemoViewController: UIViewController {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-
-        alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
 
         self.present(alert, animated: true, completion:nil)
     }

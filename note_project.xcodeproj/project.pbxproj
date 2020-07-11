@@ -14,6 +14,11 @@
 		1798235524A08B8C006EEE9E /* EditTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1798235424A08B8C006EEE9E /* EditTaskController.swift */; };
 		4E3D47E324877E1900EE1E47 /* AddMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D47E224877E1900EE1E47 /* AddMemoViewController.swift */; };
 		4E3D47E52487811900EE1E47 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D47E42487811900EE1E47 /* DetailViewController.swift */; };
+		4E4D37C024B97AC400C926C8 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D37BF24B97AC400C926C8 /* FlowLayout.swift */; };
+		4E4D37C224B97AFC00C926C8 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D37C124B97AFC00C926C8 /* Cell.swift */; };
+		4E4D37C424B97CAD00C926C8 /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D37C324B97CAD00C926C8 /* Carousel.swift */; };
+		4E4D37C624B97CF700C926C8 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D37C524B97CF700C926C8 /* CustomLabel.swift */; };
+		4E4D37C824B97D1D00C926C8 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D37C724B97D1D00C926C8 /* CustomTextField.swift */; };
 		4E6BD468248E1A1E00D1AA49 /* SideBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E6BD467248E1A1E00D1AA49 /* SideBar.storyboard */; };
 		4E6BD46A248E21EA00D1AA49 /* RightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6BD469248E21EA00D1AA49 /* RightView.swift */; };
 		4E8C8BCC2484E013006A4BBB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8C8BCB2484E013006A4BBB /* AppDelegate.swift */; };
@@ -52,6 +57,11 @@
 		1798235424A08B8C006EEE9E /* EditTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskController.swift; sourceTree = "<group>"; };
 		4E3D47E224877E1900EE1E47 /* AddMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoViewController.swift; sourceTree = "<group>"; };
 		4E3D47E42487811900EE1E47 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		4E4D37BF24B97AC400C926C8 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
+		4E4D37C124B97AFC00C926C8 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		4E4D37C324B97CAD00C926C8 /* Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carousel.swift; sourceTree = "<group>"; };
+		4E4D37C524B97CF700C926C8 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		4E4D37C724B97D1D00C926C8 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		4E6BD467248E1A1E00D1AA49 /* SideBar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideBar.storyboard; sourceTree = "<group>"; };
 		4E6BD469248E21EA00D1AA49 /* RightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightView.swift; sourceTree = "<group>"; };
 		4E8C8BC82484E013006A4BBB /* note_project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = note_project.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +113,11 @@
 				4E3D47E42487811900EE1E47 /* DetailViewController.swift */,
 				4E6BD467248E1A1E00D1AA49 /* SideBar.storyboard */,
 				4E6BD469248E21EA00D1AA49 /* RightView.swift */,
+				4E4D37BF24B97AC400C926C8 /* FlowLayout.swift */,
+				4E4D37C124B97AFC00C926C8 /* Cell.swift */,
+				4E4D37C324B97CAD00C926C8 /* Carousel.swift */,
+				4E4D37C524B97CF700C926C8 /* CustomLabel.swift */,
+				4E4D37C724B97D1D00C926C8 /* CustomTextField.swift */,
 			);
 			path = Memo;
 			sourceTree = "<group>";
@@ -303,14 +318,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E8C8BD02484E013006A4BBB /* ViewController.swift in Sources */,
+				4E4D37C624B97CF700C926C8 /* CustomLabel.swift in Sources */,
+				4E4D37C024B97AC400C926C8 /* FlowLayout.swift in Sources */,
 				4E3D47E324877E1900EE1E47 /* AddMemoViewController.swift in Sources */,
+				4E4D37C824B97D1D00C926C8 /* CustomTextField.swift in Sources */,
 				177E2B452490A5D800352BE1 /* AddTaskController.swift in Sources */,
 				4E6BD46A248E21EA00D1AA49 /* RightView.swift in Sources */,
+				4E4D37C224B97AFC00C926C8 /* Cell.swift in Sources */,
 				4E8C8BD62484E013006A4BBB /* note_project.xcdatamodeld in Sources */,
 				4E3D47E52487811900EE1E47 /* DetailViewController.swift in Sources */,
 				177E2B4B2490AE5200352BE1 /* TaskNaviController.swift in Sources */,
 				177E2B492490A93500352BE1 /* TaskTableViewController.swift in Sources */,
 				4E8C8BCC2484E013006A4BBB /* AppDelegate.swift in Sources */,
+				4E4D37C424B97CAD00C926C8 /* Carousel.swift in Sources */,
 				1798235524A08B8C006EEE9E /* EditTaskController.swift in Sources */,
 				4E8C8BCE2484E013006A4BBB /* SceneDelegate.swift in Sources */,
 			);
