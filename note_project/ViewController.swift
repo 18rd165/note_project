@@ -62,9 +62,13 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
             let nextViewController = TaskNaviController()
             self.present(nextViewController, animated:true, completion:nil)
              */
+            
+            self.performSegue(withIdentifier: "goTask", sender: nil)
+            /*
             let storyboard: UIStoryboard = UIStoryboard(name: "Tasks", bundle: nil)
             let next: UIViewController = storyboard.instantiateInitialViewController()!
             present(next, animated: true, completion: nil)
+             */
         }
 
         override func viewWillAppear(_ animated: Bool) {

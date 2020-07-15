@@ -124,9 +124,9 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
         if sortingItemEnabled == false {
             anyActionEvent()
             return
+        }else if goBackMemo.title == "戻る" {
+            self.dismiss(animated: true, completion: nil)
         }
-        
-        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func addTaskButton(_ sender: Any) {
@@ -227,7 +227,7 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
         if Date() > modifiedDate {
             notificationTime = nowCom
             print("now")
-            trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            trigger = UNTimeIntervalNotificationTrigger(timeInterval: 4, repeats: false)
         }else{
             trigger = UNCalendarNotificationTrigger(dateMatching: notificationTime, repeats: false)
         }
@@ -526,7 +526,7 @@ class TaskTableViewController: UITableViewController, UNUserNotificationCenterDe
         if enabled == true{
             goBackMemo.title = "完了"
         }else{
-            goBackMemo.title = "戻る"
+            goBackMemo.title = ""
         }
     }
     
