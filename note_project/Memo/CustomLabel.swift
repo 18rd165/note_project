@@ -15,8 +15,6 @@ class CustomLabel: UITextField {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.frame.size.height = 25 // ここ変える
-
         composeUnderline() // 下線のスタイルセットおよび追加処理
 
         self.borderStyle = .none

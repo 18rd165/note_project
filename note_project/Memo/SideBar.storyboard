@@ -31,6 +31,18 @@
                                             <action selector="deleteMemo:" destination="fRz-Kd-vM8" eventType="touchUpInside" id="M9P-tY-Srt"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ndn-yd-Ff2">
+                                        <rect key="frame" x="24" y="156" width="215" height="42"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="            上書き" image="arrow.down.doc" catalog="system">
+                                            <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="overWrite:" destination="fRz-Kd-vM8" eventType="touchUpInside" id="f2M-Rm-h6C"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
@@ -44,6 +56,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.down.doc" catalog="system" width="115" height="128"/>
         <image name="trash" catalog="system" width="121" height="128"/>
     </resources>
 </document>

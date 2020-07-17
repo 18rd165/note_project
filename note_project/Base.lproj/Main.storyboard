@@ -33,23 +33,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Yt0-55-9jM" customClass="CustomTextField" customModule="note_project" customModuleProvider="target">
-                                <rect key="frame" x="20" y="20" width="374" height="650"/>
+                                <rect key="frame" x="20" y="10" width="374" height="709"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" red="0.41176470590000003" green="0.40000000000000002" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PxJ-jq-M0F">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="795"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </containerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ページ数" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlc-6v-MMO">
+                                <rect key="frame" x="0.0" y="700" width="414" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.41176470590000003" green="0.40000000000000002" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="QzV-O1-Hfs" firstAttribute="bottom" secondItem="Yt0-55-9jM" secondAttribute="bottom" constant="55" id="fqM-Wr-E5z"/>
-                            <constraint firstItem="Yt0-55-9jM" firstAttribute="leading" secondItem="SP7-c5-a8k" secondAttribute="leadingMargin" id="hvu-Nh-g2E"/>
-                            <constraint firstItem="Yt0-55-9jM" firstAttribute="top" secondItem="QzV-O1-Hfs" secondAttribute="top" constant="20" id="l95-3i-DCd"/>
-                            <constraint firstItem="Yt0-55-9jM" firstAttribute="trailing" secondItem="SP7-c5-a8k" secondAttribute="trailingMargin" id="tKP-ej-gHA"/>
+                            <constraint firstItem="QzV-O1-Hfs" firstAttribute="bottom" secondItem="Yt0-55-9jM" secondAttribute="bottom" constant="6" id="473-cu-ihy"/>
+                            <constraint firstItem="Yt0-55-9jM" firstAttribute="leading" secondItem="QzV-O1-Hfs" secondAttribute="leading" constant="20" id="Suy-4L-0Tx"/>
+                            <constraint firstItem="Yt0-55-9jM" firstAttribute="top" secondItem="QzV-O1-Hfs" secondAttribute="top" constant="10" id="dMg-1o-2Rl"/>
+                            <constraint firstItem="qlc-6v-MMO" firstAttribute="top" secondItem="QzV-O1-Hfs" secondAttribute="top" constant="700" id="dlv-3n-L4V"/>
+                            <constraint firstItem="QzV-O1-Hfs" firstAttribute="trailing" secondItem="qlc-6v-MMO" secondAttribute="trailing" id="pIe-NR-qGu"/>
+                            <constraint firstItem="qlc-6v-MMO" firstAttribute="leading" secondItem="QzV-O1-Hfs" secondAttribute="leading" id="wN2-Nw-1km"/>
+                            <constraint firstItem="QzV-O1-Hfs" firstAttribute="trailing" secondItem="Yt0-55-9jM" secondAttribute="trailing" constant="20" id="yPW-xx-vzg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QzV-O1-Hfs"/>
                     </view>
@@ -62,12 +71,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="memoTextView" destination="Yt0-55-9jM" id="5ey-Fc-1N3"/>
+                        <outlet property="pages" destination="qlc-6v-MMO" id="qi8-Hi-nwP"/>
                         <outlet property="rightContainerView" destination="PxJ-jq-M0F" id="Hm5-Eg-iot"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="heG-D5-rOw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1526" y="550"/>
+            <point key="canvasLocation" x="1524.6376811594205" y="549.77678571428567"/>
         </scene>
         <!--TItle-->
         <scene sceneID="pFM-Oj-Fo5">
@@ -253,17 +263,30 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ページ数" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MBn-uV-ZQv">
+                                            <rect key="frame" x="0.0" y="26" width="50" height="24"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <color key="textColor" red="0.41176470590000003" green="0.40000000000000002" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" red="0.90980392160000001" green="0.90980392160000001" blue="0.81176470590000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="oRd-Ow-Fyv" secondAttribute="bottom" id="0jw-aY-JFh"/>
+                                    <constraint firstAttribute="trailing" secondItem="MBn-uV-ZQv" secondAttribute="trailing" id="3qG-yu-NCo"/>
                                     <constraint firstItem="oRd-Ow-Fyv" firstAttribute="top" secondItem="edB-Dy-sFj" secondAttribute="top" id="5gV-Gs-ROe"/>
+                                    <constraint firstAttribute="bottom" secondItem="MBn-uV-ZQv" secondAttribute="bottom" id="7xm-Uu-blR"/>
                                     <constraint firstItem="oRd-Ow-Fyv" firstAttribute="leading" secondItem="edB-Dy-sFj" secondAttribute="leading" id="HbR-Jy-q9l"/>
+                                    <constraint firstAttribute="trailing" secondItem="MBn-uV-ZQv" secondAttribute="trailing" id="Rkf-FL-gys"/>
                                     <constraint firstAttribute="trailing" secondItem="oRd-Ow-Fyv" secondAttribute="trailing" id="T4W-IB-aNG"/>
+                                    <constraint firstItem="MBn-uV-ZQv" firstAttribute="leading" secondItem="edB-Dy-sFj" secondAttribute="leading" id="YdH-RT-fOY"/>
+                                    <constraint firstItem="MBn-uV-ZQv" firstAttribute="leading" secondItem="edB-Dy-sFj" secondAttribute="leading" id="hFJ-Ty-B8M"/>
+                                    <constraint firstAttribute="bottom" secondItem="MBn-uV-ZQv" secondAttribute="bottom" id="ip2-CV-hUN"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="noteText" destination="oRd-Ow-Fyv" id="cqa-ZL-Fly"/>
+                                    <outlet property="pages" destination="MBn-uV-ZQv" id="Aib-7I-fOd"/>
                                     <segue destination="fir-po-JMa" kind="show" identifier="toDisplay" id="dfr-Yt-ewd"/>
                                 </connections>
                             </collectionViewCell>
@@ -291,7 +314,19 @@
                             </connections>
                         </collectionReusableView>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="Zi7-9P-B2h"/>
+                    <navigationItem key="navigationItem" id="Zi7-9P-B2h">
+                        <barButtonItem key="rightBarButtonItem" style="done" id="Ffe-Wa-eYt">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DIL-3W-bYT">
+                                <rect key="frame" x="295" y="6" width="99" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Page addition"/>
+                                <connections>
+                                    <action selector="pageAddition:" destination="m6K-Cq-4Bc" eventType="touchUpInside" id="u92-uq-QtO"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N6g-Gj-47U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

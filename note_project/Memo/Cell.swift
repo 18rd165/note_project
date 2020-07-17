@@ -12,7 +12,9 @@ final class Cell: UICollectionViewCell {
     
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var noteText: UITextView!
-    static let aspectRatio: CGFloat = sqrt(2.0)
+    @IBOutlet weak var pages: UILabel!
+    
+    static let aspectRatio: CGFloat = 16.3/9
 
     override func awakeFromNib() {
         super.awakeFromNib()

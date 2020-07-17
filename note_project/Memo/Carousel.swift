@@ -10,10 +10,13 @@ import UIKit
 
 final class Carousel: UICollectionViewController {
     
+    var memoArray = [[String]]()
+    
     var selectedLabel: String!
     var selectedRow:Int!
     var selectedMemo : [String]!
     
+    let ud = UserDefaults.standard
     
     var displaySegue: UIStoryboardSegue!
     
@@ -49,6 +52,8 @@ final class Carousel: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! Cell
         cell.noteText.text = selectedMemo[indexPath.row + 1]
+        let pages = String(indexPath.row + 1)
+        cell.pages.text = "- \(pages) -"
         return cell
     }
 
@@ -62,22 +67,8 @@ final class Carousel: UICollectionViewController {
 
     // セルが選択された時の処理を指定する
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("check")
-        print(selectedMemo!)
-        
-        // 上書き
-        /*let ud = UserDefaults.standard
-        if ud.array(forKey: "memoArray") != nil{
-            var saveMemoArray = ud.array(forKey: "memoArray") as! [[String]]
-            saveMemoArray.remove(at: selectedRow)
-            saveMemoArray.insert(selectedMemo, at: selectedRow)
-            ud.set(saveMemoArray, forKey: "memoArray" )
-            ud.synchronize()
-            
-        }*/
         
         if displaySegue.identifier == "toDisplay"{
-            
             let detailViewController = displaySegue.destination as! DetailViewController
             detailViewController.displayMemo = selectedMemo[indexPath.row + 1]
             detailViewController.Row = selectedRow
@@ -87,6 +78,25 @@ final class Carousel: UICollectionViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         displaySegue = segue
+    }
+    
+    @IBAction func pageAddition(_ sender: Any) {
+        memoArray[selectedRow].insert("", at: selectedMemo.count)
+        ud.set(memoArray, forKey: "memoArray")
+        memoArray = ud.array(forKey: "memoArray") as! [[String]]
+        selectedMemo = memoArray[selectedRow]
+        
+        self.collectionView?.reloadData()
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        memoArray = ud.array(forKey: "memoArray") as! [[String]]
+        selectedMemo = memoArray[selectedRow]
+        print("reload")
+        self.collectionView?.reloadData()
     }
 }
 
