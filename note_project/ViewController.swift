@@ -114,6 +114,8 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
                 carousel.selectedLabel = searchResult[selectedIndexPath.row][0]
                 carousel.selectedMemo = searchResult[selectedIndexPath.row]
                 carousel.selectedRow = selectedIndexPath.row
+                let searchArry: [[String]] = searchResult + anotherResult
+                ud.set(searchArry, forKey: "memoArray")
             }
             else{
                 let selectedIndexPath = memoTableView.indexPathForSelectedRow!
@@ -174,11 +176,26 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
                 return false
             }
         }
+        
+        anotherResult = subtractionArrays(array1: memoArray, array2: searchResult)
          
         //テーブルを再読み込みする。
         memoTableView.reloadData()
         
     }
+    
+    // 配列の引き算
+    func subtractionArrays(array1: [[String]],array2: [[String]]) -> [[String]] {
+        var resultArray = array1
+        let subArray = array2
+        subArray.forEach { (a) in
+            if resultArray.firstIndex(of: a) != nil {
+                resultArray.remove(at: resultArray.firstIndex(of: a)!)
+            }
+        }
+        return resultArray
+    }
+    
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem){
         switch item.tag {
