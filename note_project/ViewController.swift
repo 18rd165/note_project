@@ -55,6 +55,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
             if(searchMemo.text != "" ){
+                anotherResult = subtractionArrays(array1: anotherResult, array2: searchResult)
                 searchResult.remove(at: indexPath.row)
                 anotherResult += searchResult
                 ud.set(anotherResult, forKey: "memoArray")
