@@ -153,10 +153,26 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     //検索ボタン押下時の呼び出しメソッド
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchMemo.endEditing(true)
-         
+        var cheak = 0
+        
         //検索文字列を含むデータを検索結果配列に格納する。
-        searchResult = memoArray.filter { data in
-        return data.contains(searchMemo.text!)
+            searchResult = memoArray.filter {
+            data in
+            for i in 0..<10{
+                guard  i < data.count else { break }
+                if data[i].contains(searchMemo.text!) == true{
+                    cheak = 1
+                    break
+                }
+            }
+            if cheak == 1{
+                cheak = 0
+                return true
+            }
+            else
+            {
+                return false
+            }
         }
          
         //テーブルを再読み込みする。

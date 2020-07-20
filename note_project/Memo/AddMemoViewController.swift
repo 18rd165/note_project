@@ -32,6 +32,8 @@ class AddMemoViewController: UIViewController {
             if inputLabel != ""{
                 if inputText != ""{
                     saveMemoArray.append(inputArray)
+                    memoTextView.text = ""
+                    subjectText.text = ""
                     ud.set(saveMemoArray, forKey: "memoArray")
                 }
                 else {
@@ -49,6 +51,8 @@ class AddMemoViewController: UIViewController {
             //nilを強制アンラップはエラーが出るから
             if inputLabel != ""{
                 newMemoArray.append(inputArray)
+                memoTextView.text = ""
+                subjectText.text = ""
                 ud.set(newMemoArray, forKey: "memoArray")
                 if inputText != ""{
                     newMemoArray.append(inputArray)
