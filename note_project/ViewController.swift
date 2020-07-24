@@ -161,8 +161,8 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         //検索文字列を含むデータを検索結果配列に格納する。
             searchResult = memoArray.filter {
             data in
-            for i in 0..<10{
-                guard  i < data.count else { break }
+            for i in 0..<data.count{
+                //guard  i < data.count else { break }
                 if data[i].contains(searchMemo.text!) == true{
                     cheak = 1
                     break
