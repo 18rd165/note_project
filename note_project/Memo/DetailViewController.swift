@@ -59,6 +59,7 @@ class DetailViewController: UIViewController {
     var displayMemo : String!
     var Row:Int!
     
+    
     let ud = UserDefaults.standard
     
     override func viewDidLoad() {
@@ -66,6 +67,10 @@ class DetailViewController: UIViewController {
 
         memoTextView.text = displayMemo
         pages.text = "- \(displayRow+1) -"
+        
+        self.memoTextView.delegate = self
+        
+        memoTextView.layer.cornerRadius = 20.0;
     }
     
     
@@ -93,5 +98,64 @@ class DetailViewController: UIViewController {
 
             self.navigationController?.popViewController(animated: true)
         }
+    }
+    
+    
+    @IBAction func redPen(_ sender: Any) {
+        let range = memoTextView.selectedRange
+        let string = NSMutableAttributedString(attributedString: memoTextView.attributedText)
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
+        string.addAttributes(attributes, range: memoTextView.selectedRange)
+        memoTextView.attributedText = string
+        memoTextView.selectedRange = range
+    }
+    @IBAction func bluePen(_ sender: Any) {
+        let range = memoTextView.selectedRange
+        let string = NSMutableAttributedString(attributedString: memoTextView.attributedText)
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.blue]
+        string.addAttributes(attributes, range: memoTextView.selectedRange)
+        memoTextView.attributedText = string
+        memoTextView.selectedRange = range
+    }
+    
+    @IBAction func defaultPen(_ sender: Any) {
+        let range = memoTextView.selectedRange
+        let string = NSMutableAttributedString(attributedString: memoTextView.attributedText)
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 105, green: 102, blue: 82, alpha: 1)]
+        string.addAttributes(attributes, range: memoTextView.selectedRange)
+        memoTextView.attributedText = string
+        memoTextView.selectedRange = range
+    }
+    
+}
+
+
+extension DetailViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+
+        let newText: String = (textView.text! as NSString).replacingCharacters(in: range, with: text)
+        return numberOfLines(orgTextView: textView, newText: newText) <= 27
+    }
+
+    private func numberOfLines(orgTextView: UITextView, newText: String) -> Int {
+
+        // UITextViewを複製します。iOS12では古いAPIを使っているというような警告がでます。
+        let cloneTextView = NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: orgTextView)) as! UITextView
+
+        cloneTextView.text = newText + " "
+
+        let layoutManager = cloneTextView.layoutManager
+        let numberOfGlyphs = layoutManager.numberOfGlyphs
+        var numberOfLines = 0
+        var index = 0
+        var lineRange = NSRange()
+
+        while index < numberOfGlyphs {
+            layoutManager.lineFragmentRect(forGlyphAt: index, effectiveRange: &lineRange)
+            index = NSMaxRange(lineRange);
+            numberOfLines = numberOfLines + 1
+        }
+
+        return numberOfLines
     }
 }

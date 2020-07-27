@@ -9,7 +9,7 @@
 import UIKit
 
 class CustomTextField: UITextView{
-
+    
     var lineHeight: CGFloat = 13.8
 
     override var font: UIFont? {
@@ -41,5 +41,33 @@ class CustomTextField: UITextView{
         ctx?.strokePath()
 
         super.draw(rect)
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+
+        let newText: String = (textView.text! as NSString).replacingCharacters(in: range, with: text)
+        return numberOfLines(orgTextView: textView, newText: newText) <= 3
+    }
+
+    private func numberOfLines(orgTextView: UITextView, newText: String) -> Int {
+
+        // UITextViewを複製します。iOS12では古いAPIを使っているというような警告がでます。
+        let cloneTextView = NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: orgTextView)) as! UITextView
+
+        cloneTextView.text = newText + " "
+
+        let layoutManager = cloneTextView.layoutManager
+        let numberOfGlyphs = layoutManager.numberOfGlyphs
+        var numberOfLines = 0
+        var index = 0
+        var lineRange = NSRange()
+
+        while index < numberOfGlyphs {
+            layoutManager.lineFragmentRect(forGlyphAt: index, effectiveRange: &lineRange)
+            index = NSMaxRange(lineRange);
+            numberOfLines = numberOfLines + 1
+        }
+
+        return numberOfLines
     }
 }

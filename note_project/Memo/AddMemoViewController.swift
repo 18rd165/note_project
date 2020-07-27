@@ -15,6 +15,9 @@ class AddMemoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.memoTextView.delegate = self
+        memoTextView.layer.cornerRadius = 20.0;
     }
     
     
@@ -78,4 +81,34 @@ class AddMemoViewController: UIViewController {
         self.present(alert, animated: true, completion:nil)
     }
     
+}
+
+extension AddMemoViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+
+        let newText: String = (textView.text! as NSString).replacingCharacters(in: range, with: text)
+        return numberOfLines(orgTextView: textView, newText: newText) <= 27
+    }
+
+    private func numberOfLines(orgTextView: UITextView, newText: String) -> Int {
+
+        // UITextViewを複製します。iOS12では古いAPIを使っているというような警告がでます。
+        let cloneTextView = NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: orgTextView)) as! UITextView
+
+        cloneTextView.text = newText + " "
+
+        let layoutManager = cloneTextView.layoutManager
+        let numberOfGlyphs = layoutManager.numberOfGlyphs
+        var numberOfLines = 0
+        var index = 0
+        var lineRange = NSRange()
+
+        while index < numberOfGlyphs {
+            layoutManager.lineFragmentRect(forGlyphAt: index, effectiveRange: &lineRange)
+            index = NSMaxRange(lineRange);
+            numberOfLines = numberOfLines + 1
+        }
+
+        return numberOfLines
+    }
 }
